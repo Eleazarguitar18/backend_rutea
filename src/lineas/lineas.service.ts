@@ -66,4 +66,36 @@ export class LineasService {
       throw new Error('Error al actualizar la línea: ' + error.message);
     }
   }
+
+  /** Devuelve solo el número (nombre) de todas las líneas */
+  async findAllNombres(): Promise<{ id: number; numero: string }[]> {
+    const data = await this.lineasRepository.find({
+      select: ['id', 'numero'],
+    });
+    if (data.length === 0) {
+      throw new NotFoundException('No existen líneas registradas');
+    }
+    return data;
+  }
+
+  /** Devuelve solo el número y la descripción de una línea por ID */
+  async findOneResumen(id: number): Promise<{ numero: string; descripcion: string }> {
+    const data = await this.lineasRepository.findOne({
+      where: { id },
+      select: ['numero', 'descripcion'],
+    });
+    if (!data) {
+      throw new NotFoundException(`No existe la línea con ID ${id}`);
+    }
+    return data;
+  }
+
+  /** Verifica si una línea con ese número ya existe en la BD */
+  async existeLinea(numero: string): Promise<{ existe: boolean; mensaje: string }> {
+    const linea = await this.lineasRepository.findOne({ where: { numero } });
+    if (linea) {
+      return { existe: true, mensaje: `La línea "${numero}" ya existe en la base de datos` };
+    }
+    return { existe: false, mensaje: `La línea "${numero}" no existe en la base de datos` };
+  }
 }
