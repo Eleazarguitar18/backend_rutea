@@ -1,18 +1,23 @@
-FROM node:20-alpine
+# Use the official Node.js image as the base image
+FROM node:20
 
-# Instalar herramientas necesarias para desarrollo
-RUN apk add --no-cache \
-    git \
-    nano
-
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Cache de dependencias
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
+
+# Install the application dependencies
 RUN npm install
 
-# Código (igual lo sobreescribe el volumen)
+# Copy the rest of the application files
 COPY . .
 
+# Build the NestJS application
+RUN npm run build
+
+# Expose the application port
 EXPOSE 3000
-CMD ["npm", "run", "start:dev"]
+
+# Command to run the application
+CMD ["node", "dist/main"]

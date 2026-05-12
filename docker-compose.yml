@@ -1,4 +1,22 @@
-version: '3.3'
-
 services:
-  rutea:
+  rutea-backend:
+    image: rutea-backend:latest
+    # 2. Esto indica dónde está el Dockerfile para construirla
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rutea_api
+    ports:
+      - '3000:3000'
+    environment:
+      - DATABASE_HOST=postgres-postgres-1
+      - REDIS_URL=redis://:ele21@rutea-redis:6379
+    networks:
+      - postgres_default
+    # depends_on:
+    # - redis-service # Opcional: si el servicio de redis estuviera en este mismo archivo
+
+# Definimos la red como externa porque ya existe (la que usa tu BD)
+networks:
+  postgres_default:
+    external: true

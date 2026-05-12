@@ -127,7 +127,7 @@ export class AuthService {
         where: { id: payload.sub },
       });
       if (!user) {
-        throw new UnauthorizedException('User not found');
+        throw new UnauthorizedException('Usuario no encontrado');
       }
 
       const newAccessToken = await this.jwtService.signAsync(
@@ -140,7 +140,7 @@ export class AuthService {
 
       return { access_token: newAccessToken };
     } catch (e) {
-      throw new UnauthorizedException('Invalid or expired refresh token');
+      throw new UnauthorizedException('Token de refresco inválido o expirado');
     }
   }
 
@@ -229,20 +229,20 @@ export class AuthService {
     return { message: 'Contraseña actualizada correctamente' };
   }
   findAll() {
-    return `This action returns all auth`;
+    return `Esta acción devuelve todos los registros de autenticación`;
   }
   //  @Roles('admin')
   // @UseGuards(RolesGuard)
   findOne(id: number) {
-    return `This action returns a #${id} auth`;
+    return `Esta acción devuelve la autenticación con id #${id}`;
   }
 
   update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
+    return `Esta acción actualiza la autenticación con id #${id}`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} auth`;
+    return `Esta acción elimina la autenticación con id #${id}`;
   }
 
   async onModuleInit() {

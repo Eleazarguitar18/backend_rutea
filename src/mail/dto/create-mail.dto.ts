@@ -2,19 +2,34 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateMailDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Correo electrónico del destinatario',
+    example: 'usuario@example.com',
+  })
   @IsEmail({}, { message: 'El email no tiene un formato válido' })
   @IsNotEmpty()
   email: string;
-  @ApiProperty()
+
+  @ApiProperty({
+    description: 'Asunto del correo',
+    example: 'Bienvenida a Rutea',
+  })
   @IsString()
   @IsNotEmpty()
   subject: string;
-  @ApiProperty()
+
+  @ApiProperty({
+    description: 'Mensaje o contenido del correo',
+    example: 'Hola, bienvenido a nuestra plataforma.',
+  })
   @IsString()
   @IsNotEmpty()
   message: string;
-  @ApiProperty()
+
+  @ApiProperty({
+    description: 'Nombre del destinatario',
+    example: 'Juan Pérez',
+  })
   @IsString()
   @IsNotEmpty()
   name: string;

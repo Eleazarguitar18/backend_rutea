@@ -113,11 +113,11 @@ export class PuntosService {
   }
 
   update(id: number, updatePuntoDto: UpdatePuntoDto) {
-    return `This action updates a #${id} punto`;
+    return `Esta acción actualiza el punto con id #${id}`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} punto`;
+    return `Esta acción elimina el punto con id #${id}`;
   }
 
   async buscarCercano(lat: number, lng: number): Promise<PuntoDto> {
